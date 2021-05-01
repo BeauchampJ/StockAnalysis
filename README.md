@@ -13,3 +13,5 @@ Program that allows importation of stock data and analysis of said data. Created
 - - Main file that covers bulk of content found in repository
 - csv_files
 - - Folder where the user can drop csv files
+- dataSave
+- - Save location for graphs and data tables created
