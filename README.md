@@ -4,6 +4,10 @@
 This is still a work in progress so it's missing a lot of the features that will be later implemented
 
 ---
+REQUIREMENTS:
+This matlab script requires the Financial Toolbox addon
+
+---
 ## About
 Program that allows importation of stock data and analysis of said data. Created by Jacob Beauchamp
 
