@@ -11,10 +11,7 @@
 
 %Checks to see if the user wants to erase all imported data or keep it for
 %comparison.
-restart=menu('Would you like to start from scratch?','Yes','No');
-if restart==1
-    clc;clear;close all;
-end
+clc;clear;close all;
 
 %adds csv_files to path
 addpath('csv_files')
@@ -61,6 +58,7 @@ closedata=table2array(closedata);
 adjClose=table2array(adjClose);
 volume=table2array(volume);
 dates=rows2vars(dates);
+dateTimeArray=dates(1,2:width(dates));
 
 x=[1:length(high)];
 
@@ -111,12 +109,28 @@ grid on
 
 hold off
 
+%Creates a new table that fits candle command format
+candleTable=dataTable(:,2:5);
+
+%Using Financial toolbox, create candlestick plot
+
+figure('Name','Candle Stick Plot');
+candle(candleTable,'blue');
+hold on
+title('Candle Stick Graph');
+hold off
+
+
 %% Doing some statistics on the data
 
 last50day=closedata((length(closedata)-50):(length(closedata)),1);
 movingAverage50=mean(last50day);
 last200day=closedata((length(closedata)-200):(length(closedata)),1);
 movingAverage200=mean(last200day);
+
+%% Printing data to console
+fprintf('50 day moving average is %f\n',movingAverage50);
+fprintf('200 day moving average is %f\n',movingAverage200);
 
 %% Saving Graphs (if wanted)
 if wantSave==1
@@ -127,29 +141,18 @@ if wantSave==1
     saveas(figure(4),[pwd '/dataSave/CloseValue.fig']);
     saveas(figure(5),[pwd '/dataSave/AdjustedCloseValue.fig']);
     saveas(figure(6),[pwd '/dataSave/Volume.fig']);
-    disp('Figures and statistics successfuly saved!');
+    saveas(figure(7),[pwd '/dataSave/CandleStick.fig']);
+    disp('Figures and statistics successfuly saved! Find them in dataSave file');
+   
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+closeWindow=menu('Want to close these windows?','Yes','No');
+if closeWindow==1
+     %Closes figures since they were saved already!
+    close figure 1
+    close figure 2
+    close figure 3
+    close figure 4
+    close figure 5
+    close figure 6
+    close figure 7
+end
